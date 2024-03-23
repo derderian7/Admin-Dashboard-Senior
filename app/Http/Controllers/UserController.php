@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('services')->get();
         return response()->json($users);
     }
 
