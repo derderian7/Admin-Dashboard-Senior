@@ -6,7 +6,11 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\ServiceController' => $baseDir . '/app/Http/Controllers/ServiceController.php',
+    'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
+    'App\\Models\\Service' => $baseDir . '/app/Models/Service.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -2734,6 +2738,7 @@ return array(
     'Mockery\\CountValidator\\AtLeast' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/AtLeast.php',
     'Mockery\\CountValidator\\AtMost' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/AtMost.php',
     'Mockery\\CountValidator\\CountValidatorAbstract' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorAbstract.php',
+    'Mockery\\CountValidator\\CountValidatorInterface' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorInterface.php',
     'Mockery\\CountValidator\\Exact' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/Exact.php',
     'Mockery\\CountValidator\\Exception' => $vendorDir . '/mockery/mockery/library/Mockery/CountValidator/Exception.php',
     'Mockery\\Exception' => $vendorDir . '/mockery/mockery/library/Mockery/Exception.php',
