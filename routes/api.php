@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services_count', [ServiceController::class, 'services_count']);
     Route::apiresource('services', ServiceController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
+    Route::get('services_total_usage', [ServiceController::class, 'total_usage']);
 });
