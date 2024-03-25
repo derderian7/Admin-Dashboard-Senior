@@ -17,8 +17,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/users_count', [UserController::class, 'users_count']);
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users_count', [UserController::class, 'users_count']);
     Route::apiresource('users', UserController::class);
