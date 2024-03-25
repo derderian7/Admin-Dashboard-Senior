@@ -18,6 +18,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('service')->get();
+                foreach( $users as $user ) {
+            foreach($user->service as $service) {
+                $service_name = Service::find($service->service_id);
+                $service_name = $service_name->name;
+                $service->service_name =  $service_name;
+            }
+        }
         return response()->json($users);
     }
 
