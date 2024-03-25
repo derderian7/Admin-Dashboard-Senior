@@ -110,4 +110,14 @@ class ServiceController extends Controller
         $service->delete();
         return response()->json(['message' => 'Service deleted successfully']);
     }
+
+        public function services_count()
+    {
+        return response()->json(Service::count());
+    }
+
+    public function famous_services()
+    {
+        return response()->json(Service::OrderBy('subscribers', 'desc')->take(5)->get());
+    }
 }
