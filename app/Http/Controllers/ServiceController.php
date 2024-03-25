@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\UserService;
 
 class ServiceController extends Controller
 {
