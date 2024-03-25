@@ -120,4 +120,13 @@ class ServiceController extends Controller
     {
         return response()->json(Service::OrderBy('subscribers', 'desc')->take(5)->get());
     }
+
+        public function total_usage()
+    {
+        $totalUsage = UserService::sum('usage');
+
+        return response()->json([
+            'total_usage' => $totalUsage,
+        ]);
+    }
 }
