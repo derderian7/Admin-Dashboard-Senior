@@ -104,6 +104,7 @@ class UserController extends Controller
             'name' => $request->name ?? $user->name,
             'email' => $request->email ?? $user->email,
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+            'is_admin' => $request->is_admin ?? $user->is_admin,
         ]);
 
         return response()->json('user is updated successfully');
