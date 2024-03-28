@@ -25,6 +25,8 @@ class AuthController extends Controller
     }
         $user = User::where('email', $request->email)->first();
 
+        if($user->is_admin == 1){
+
         $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
@@ -32,7 +34,11 @@ class AuthController extends Controller
             'token' => $token,
             'user' => $user,
         ]);
-    }
+        };
+        return response()->json([
+        'message' => 'You are not an admin',
+    ]);
+}
 
     public function register(Request $request)
     {
