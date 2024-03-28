@@ -60,8 +60,10 @@ class Authenticate implements AuthenticatesRequests
     public function handle($request, Closure $next, ...$guards)
     {
         $this->authenticate($request, $guards);
-
+        if(auth()->user()->is_admin == 1){
         return $next($request);
+        } 
+        else return 'you are not an admin';
     }
 
     /**
