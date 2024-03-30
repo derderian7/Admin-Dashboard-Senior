@@ -131,4 +131,25 @@ class UserController extends Controller
     {
         return response()->json(User::count());
     }
+    public function admin_change_password(Request $request)
+    {
+        $user = Auth::user();
+        if(Hash::check($request->old_password, $user->password)){
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'confirmed|min:6'
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()->toJson()]);
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['message' => 'Password changed Successfully']);
+    }
+    return  response()->json(['message'=>"Wrong Password"]);
+    }
 }
