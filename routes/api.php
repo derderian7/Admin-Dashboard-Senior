@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admin_change_password', [UserController::class, 'admin_change_password']);
     Route::get('/users_count', [UserController::class, 'users_count']);
     Route::apiresource('users', UserController::class);
+    Route::get('user_services', [UserController::class, 'user_services']);
     Route::get('/services_count', [ServiceController::class, 'services_count']);
     Route::apiresource('services', ServiceController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
