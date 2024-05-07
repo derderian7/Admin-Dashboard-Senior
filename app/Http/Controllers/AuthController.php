@@ -13,19 +13,46 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-    $validator = Validator::make($request->all(), [
-        'email' => 'required',
-        'password' => 'required|string|min:6',
-    ]);
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
-    }
-    if (! $token = auth()->attempt($validator->validated())) {
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         $user = User::where('email', $request->email)->first();
 
-        if($user->is_admin == 1){
+        if ($user->is_admin == 1) {
+
+            $token = $user->createToken('authToken')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login successful',
+                'token' => $token,
+                'user' => $user,
+            ]);
+        };
+        return response()->json([
+            'message' => 'You are not an admin',
+        ]);
+    }
+
+    public function user_login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (!$token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $user = User::where('email', $request->email)->first();
 
         $token = $user->createToken('authToken')->plainTextToken;
 
@@ -34,11 +61,10 @@ class AuthController extends Controller
             'token' => $token,
             'user' => $user,
         ]);
-        };
         return response()->json([
-        'message' => 'You are not an admin',
-    ]);
-}
+            'message' => 'You are not an admin',
+        ]);
+    }
 
     public function register(Request $request)
     {
@@ -47,7 +73,7 @@ class AuthController extends Controller
             'email' => 'required|string|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
         }
 
@@ -74,5 +100,4 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'User successfully logged out']);
     }
-
 }
