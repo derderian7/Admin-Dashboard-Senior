@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AuthController extends Controller
 {
@@ -77,10 +77,24 @@ class AuthController extends Controller
             return response()->json(['error' => $validator->errors()->toJson()]);
         }
 
+        $path = 'assets/uploads/users/' . $request->image;
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+        $file = $request->file('image');
+        $ext = $file->getClientOriginalExtension();
+        $filename = time() . '.' . $ext;
+        try {
+            $file->move('assets/uploads/users/', $filename);
+        } catch (FileException $e) {
+            dd($e);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'image' => $filename
         ]);
 
         // Generate token for the registered user
