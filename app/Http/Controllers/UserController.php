@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserController extends Controller
 {
@@ -49,18 +51,32 @@ class UserController extends Controller
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
+        }
+        $path = 'assets/uploads/users/' . $request->image;
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+        $file = $request->file('image');
+        $ext = $file->getClientOriginalExtension();
+        $filename = time() . '.' . $ext;
+        try {
+            $file->move('assets/uploads/users/', $filename);
+        } catch (FileException $e) {
+            dd($e);
         }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'image' => $filename
         ]);
 
         return response()->json($user, 201);
     }
+
 
     /**
      * Display the specified user.
