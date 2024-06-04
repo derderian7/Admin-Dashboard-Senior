@@ -72,6 +72,7 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|max:100|unique:users',
             'password' => 'required|string|min:6',
+            'location' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
@@ -94,7 +95,8 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image' => $filename
+            'image' => $filename,
+            'location' => $request->location
         ]);
 
         // Generate token for the registered user
