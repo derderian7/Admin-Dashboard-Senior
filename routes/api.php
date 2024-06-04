@@ -15,6 +15,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::apiresource('services', ServiceController::class);
+
 Route::post('/user_login', [AuthController::class, 'user_login']);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -24,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiresource('users', UserController::class);
     Route::get('user_services', [UserController::class, 'user_services']);
     Route::get('/services_count', [ServiceController::class, 'services_count']);
-    Route::apiresource('services', ServiceController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
     Route::get('services_total_usage', [ServiceController::class, 'total_usage']);
 });
