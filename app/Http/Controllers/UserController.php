@@ -49,6 +49,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', Rules\Password::defaults()],
+            'location' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +72,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image' => $filename
+            'image' => $filename,
+            'location' => $request->location
         ]);
 
         return response()->json($user, 201);
