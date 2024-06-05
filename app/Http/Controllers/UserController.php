@@ -172,12 +172,21 @@ class UserController extends Controller
     return  response()->json(['message'=>"Wrong Password"]);
     }
 
-        public function user_services()
+    public function user_services()
     {
         $user = Auth::user();
 
         $services = $user->service;
 
-        return response()->json($services, 200);
+        $serviceData = $services->map(function ($service) {
+            return [
+                'service_name' => $service->service->name,
+                'usage' => $service->usage,
+                'expiry_date' => $service->expiry_date,
+                'created_at' => $service->created_at
+            ];
+        });
+
+        return response()->json($serviceData, 200);
     }
 }
