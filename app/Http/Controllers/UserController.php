@@ -102,7 +102,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function user_update(Request $request, $id)
     {
         $user = User::find($id);
         if (!$user) {
@@ -115,16 +115,15 @@ class UserController extends Controller
             'password' => [Rules\Password::defaults()],
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
         }
+        //dd($validator);
 
-        $user->update([
-            'name' => $request->name ?? $user->name,
-            'email' => $request->email ?? $user->email,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
-            'is_admin' => $request->is_admin ?? $user->is_admin,
-        ]);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return response()->json('user is updated successfully');
     }
