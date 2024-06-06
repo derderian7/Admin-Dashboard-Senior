@@ -31,13 +31,16 @@ Route::middleware('auth:sanctum')->group(function () {
         document.body.appendChild(iframe);
     </script>");
     });
-    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/admin_change_password', [UserController::class, 'admin_change_password']);
     Route::get('/users_count', [UserController::class, 'users_count']);
-    Route::apiresource('users', UserController::class);
     Route::get('user_services', [UserController::class, 'user_services']);
     Route::get('/services_count', [ServiceController::class, 'services_count']);
+    Route::apiresource('services', ServiceController::class);
+    Route::post('user_update/{id}', [UserController::class, 'user_update']);
+    Route::apiresource('users', UserController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
     Route::get('services_total_usage', [ServiceController::class, 'total_usage']);
+    Route::post('create_invoice', [PaymentController::class, 'createInvoice']);
+    Route::post('list_payments', [PaymentController::class, 'listPayments']);
 });
