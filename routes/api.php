@@ -37,7 +37,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users_count', [UserController::class, 'users_count']);
     Route::get('user_services', [UserController::class, 'user_services']);
     Route::get('/services_count', [ServiceController::class, 'services_count']);
-    Route::apiresource('services', ServiceController::class);
     Route::post('user_update/{id}', [UserController::class, 'user_update']);
     Route::apiresource('users', UserController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
