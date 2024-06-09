@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -188,4 +189,16 @@ class UserController extends Controller
 
         return response()->json($serviceData, 200);
     }
+
+        public function topCountries()
+    {
+        $topCountries = User::select('location', DB::raw('count(*) as count'))
+            ->groupBy('location')
+            ->orderBy('count', 'desc')
+            ->take(5)
+            ->get();
+
+        return response()->json($topCountries);
+    }
+    
 }
