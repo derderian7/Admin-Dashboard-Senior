@@ -20,6 +20,8 @@ Route::post('/user_login', [AuthController::class, 'user_login']);
 
 Route::apiresource('services', ServiceController::class);
 
+Route::get('top_countries', [UserController::class, 'topCountries']);
+
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/generate_script', function (){
