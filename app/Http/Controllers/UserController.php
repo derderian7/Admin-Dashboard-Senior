@@ -102,8 +102,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function user_update(Request $request, $id)
+     */public function user_update(Request $request, $id)
     {
         $user = User::find($id);
         if (!$user) {
@@ -119,11 +118,25 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
         }
-        //dd($validator);
 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        if ($request->image) {
+            $path = 'assets/uploads/users/' . $request->image;
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            try {
+                $file->move('assets/uploads/users/', $filename);
+            } catch (FileException $e) {
+                dd($e);
+            }
+        $user->image = $filename;
+        }
         $user->save();
 
         return response()->json('user is updated successfully');
