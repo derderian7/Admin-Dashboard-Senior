@@ -73,11 +73,11 @@ class AuthController extends Controller
             'email' => 'required|string|max:100|unique:users',
             'password' => 'required|string|min:6',
             'location' => 'required|string',
-            'image' => 'required'
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->toJson()]);
         }
+        if($request->image){
 
         $path = 'assets/uploads/users/' . $request->image;
         if (File::exists($path)) {
@@ -99,6 +99,14 @@ class AuthController extends Controller
             'image' => $filename,
             'location' => $request->location
         ]);
+        } else{
+            $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'location' => $request->location
+        ]);
+        }
 
         // Generate token for the registered user
         $token = $user->createToken('authToken')->plainTextToken;
