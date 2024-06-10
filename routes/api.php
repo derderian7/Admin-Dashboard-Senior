@@ -34,6 +34,11 @@ Route::middleware('auth:sanctum')->group(function () {
         document.body.appendChild(iframe);
     </script>");
     });
+
+    Route::get('/generate_api', function (){
+        return response()->json("http://localhost:7200");
+    });
+    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/admin_change_password', [UserController::class, 'admin_change_password']);
     Route::get('/users_count', [UserController::class, 'users_count']);
