@@ -6,6 +6,7 @@ use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Middleware\HandleCors;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
