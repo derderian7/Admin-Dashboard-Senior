@@ -18,7 +18,7 @@ class PaymentController extends Controller
             'order_id' => $request->input('order_id'),
             'order_description' => $request->input('order_description'),
             'ipn_callback_url' => "https://nowpayments.io",
-            'success_url' => "https://nowpayments.io",
+            'success_url' => $request->input('success_url'),
             'cancel_url' => "https://nowpayments.io",
             'partially_paid_url' => "https://nowpayments.io",
             'is_fixed_rate' => true,
