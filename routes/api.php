@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiresource('users', UserController::class);
     Route::get('/famous_services', [ServiceController::class, 'famous_services']);
     Route::get('services_total_usage', [ServiceController::class, 'total_usage']);
-    Route::post('create_invoice', [PaymentController::class, 'createInvoice']);
+    Route::middleware([HandleCors::class])->group(function () {
+        Route::post('create_invoice', [PaymentController::class, 'createInvoice']);
+    }); 
     Route::post('list_payments', [PaymentController::class, 'listPayments']);
 });
