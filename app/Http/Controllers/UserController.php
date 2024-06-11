@@ -122,6 +122,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->location = $request->location;
         if ($request->image) {
             $path = 'assets/uploads/users/' . $request->image;
             if (File::exists($path)) {
