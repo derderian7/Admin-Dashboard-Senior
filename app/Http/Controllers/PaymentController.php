@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-       public function createInvoice(Request $request)
+        public function createInvoice(Request $request)
     {
         // Set the API endpoint
         $url = 'https://api.nowpayments.io/v1/invoice';
@@ -41,7 +41,6 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
-
         // Execute cURL request and get the response
         $response = curl_exec($ch);
 
@@ -62,9 +61,8 @@ class PaymentController extends Controller
         $invoiceData = json_decode($response, true);
         $invoiceUrl = $invoiceData['invoice_url'];
 
-        // Return the invoice as JSON response
-        return redirect($invoiceUrl);
-        //return response()->json($invoiceUrl);
+        // Return the invoice URL as JSON response
+        return response()->json(['invoice_url' => $invoiceUrl], 201);
     }
 
     public function listPayments()
